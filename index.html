@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>Sinner Saint | Launching Soon</title>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700;900&family=Lexend:wght@300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+
+        <style>
+            :root {
+                --primary-red: #7a1d1d;
+                --glass: rgba(0, 0, 0, 0.85);
+                --roundness: 30px;
+                --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                -webkit-tap-highlight-color: transparent;
+                /* Global Shadow Removal */
+                text-shadow: none !important;
+                box-shadow: none !important;
+            }
+
+            body {
+                height: 100vh;
+                width: 100vw;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #000;
+                color: #fff;
+                font-family: "Lexend", sans-serif;
+            }
+
+            /* --- VIDEO BACKGROUND --- */
+            #bg-video {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                min-width: 100%;
+                min-height: 100%;
+                transform: translate(-50%, -50%) scale(1.1);
+                z-index: -100;
+                object-fit: cover;
+                filter: brightness(0.4) blur(12px);
+            }
+
+            /* --- TYPOGRAPHY --- */
+            h1,
+            h2,
+            .thank-you-title {
+                font-family: "Passion One", cursive;
+                text-transform: uppercase;
+                letter-spacing: 0.05rem;
+                line-height: 1;
+            }
+
+            /* --- STAGES --- */
+            .stage {
+                display: none;
+                opacity: 0;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                z-index: 10;
+                transition: var(--transition);
+                transform: translateY(30px);
+                width: 100%;
+                padding: 20px;
+            }
+
+            #stage-splash {
+                display: flex;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .logo-main {
+                width: clamp(220px, 35vw, 350px);
+                margin-bottom: 20px;
+            }
+
+            .launching-text {
+                font-size: clamp(2.2rem, 9vw, 6rem);
+                color: var(--primary-red);
+                margin-bottom: 35px;
+                white-space: nowrap;
+                width: 100%;
+            }
+
+            /* --- BUTTONS (Lexend Font + Centered + Mobile Adjusted) --- */
+            .btn-main {
+                background-color: var(--primary-red);
+                color: white;
+                border: 2px solid var(--primary-red);
+                padding: 12px 35px; /* Smaller Padding for Mobile */
+                font-size: 1.1rem; /* Smaller Font for Mobile */
+                font-weight: 600;
+                font-family: "Lexend", sans-serif;
+                cursor: pointer;
+                border-radius: 60px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 12px;
+                transition: var(--transition);
+                text-decoration: none;
+                min-width: 240px; /* Slimmer min-width */
+            }
+
+            /* Laptop Adjustments for Button */
+            @media (min-width: 1024px) {
+                .btn-main {
+                    padding: 12px 40px;
+                    font-size: 1.1rem;
+                    min-width: 220px;
+                }
+            }
+
+            .arrow-icon {
+                transition: transform 0.3s ease;
+            }
+
+            /* HOVER: RED TO BLACK */
+            @media (hover: hover) {
+                .btn-main:hover {
+                    background-color: #000;
+                    color: #fff;
+                    border-color: #fff;
+                }
+                .btn-main:hover .arrow-icon {
+                    transform: translateX(8px);
+                }
+            }
+
+            /* ACTIVE: CLICK FEEDBACK */
+            .btn-main:active {
+                transform: scale(0.96);
+                background-color: #000 !important;
+                border-color: #fff !important;
+            }
+
+            /* --- GLASS CARDS --- */
+            .glass-card {
+                background: var(--glass);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: clamp(35px, 6vh, 60px) clamp(25px, 5vw, 45px);
+                border-radius: var(--roundness);
+                width: 95%;
+                max-width: 460px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .input-group {
+                text-align: left;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            label {
+                display: block;
+                font-size: 0.75rem;
+                font-weight: 600;
+                margin-bottom: 8px;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                opacity: 0.8;
+                padding-left: 5px;
+            }
+
+            input {
+                width: 100%;
+                padding: 15px 22px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                color: white;
+                outline: none;
+                font-family: "Lexend", sans-serif;
+                font-size: 16px;
+                transition: 0.3s;
+            }
+            input:focus {
+                border-color: var(--primary-red);
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            /* --- THANK YOU STAGE --- */
+            .thank-you-title {
+                font-size: clamp(3.5rem, 15vw, 7rem);
+                color: var(--primary-red);
+                margin-bottom: 20px;
+                white-space: nowrap;
+            }
+
+            .social-link {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                margin-top: 30px;
+                color: white;
+                text-decoration: none;
+                font-family: "Lexend", sans-serif;
+                font-weight: 600;
+                font-size: 1.1rem;
+                border: 2px solid white;
+                padding: 10px 30px;
+                border-radius: 60px;
+                transition: 0.3s;
+                min-width: 200px;
+            }
+            .social-link:hover {
+                background: #fff;
+                color: #000;
+                transform: translateY(-3px);
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 20px;
+                font-size: 0.65rem;
+                opacity: 0.4;
+                width: 100%;
+                text-align: center;
+                letter-spacing: 4px;
+                font-weight: 700;
+            }
+
+            @media (max-width: 480px) {
+                .glass-card {
+                    padding: 40px 25px;
+                }
+                .btn-main {
+                    width: 90%;
+                } /* Button fits mobile better */
+            }
+        </style>
+    </head>
+    <body>
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="video.mp4" type="video/mp4" />
+        </video>
+
+        <div id="stage-splash" class="stage">
+            <img src="logo.png" alt="Sinner Saint" class="logo-main" />
+            <h1 class="launching-text">Launching Soon!</h1>
+            <button class="btn-main" onclick="transitionTo('stage-form')">
+                Join the Waitlist! <i class="fas fa-arrow-right arrow-icon"></i>
+            </button>
+        </div>
+
+        <div id="stage-form" class="stage">
+            <div class="glass-card">
+                <h2
+                    style="
+                        font-size: 2.8rem;
+                        margin-bottom: 10px;
+                        color: var(--primary-red);
+                    "
+                >
+                    The Inner Circle
+                </h2>
+                <form id="leadForm">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="YOUR NAME"
+                            required
+                        />
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="EMAIL@EXAMPLE.COM"
+                            required
+                        />
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number (Egypt)</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="01XXXXXXXXX"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="btn-main" id="submitBtn">
+                        Secure My Spot
+                        <i class="fas fa-arrow-right arrow-icon"></i>
+                    </button>
+                </form>
+                <p
+                    id="error-msg"
+                    style="
+                        color: #ff4d4d;
+                        font-size: 0.8rem;
+                        margin-top: 15px;
+                        font-weight: 600;
+                    "
+                ></p>
+            </div>
+        </div>
+
+        <div id="stage-thanks" class="stage">
+            <div class="glass-card">
+                <h1 class="thank-you-title">YOU'RE IN.</h1>
+                <p
+                    style="
+                        font-size: 1.1rem;
+                        line-height: 1.5;
+                        margin-bottom: 25px;
+                        opacity: 0.9;
+                    "
+                >
+                    Confirmation sent. <br />
+                    Stand by for the drop.
+                </p>
+                <a
+                    href="https://instagram.com/yourprofile"
+                    class="social-link"
+                    target="_blank"
+                >
+                    <i class="fab fa-instagram"></i> FOLLOW US
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">© 2025 SINNER SAINT // EST. CAIRO</div>
+
+        <script>
+            function transitionTo(nextStageId) {
+                const stages = document.querySelectorAll(".stage");
+                const nextStage = document.getElementById(nextStageId);
+
+                stages.forEach((s) => {
+                    s.style.opacity = "0";
+                    s.style.transform = "translateY(-20px)";
+                });
+
+                setTimeout(() => {
+                    stages.forEach((s) => (s.style.display = "none"));
+                    nextStage.style.display = "flex";
+                    setTimeout(() => {
+                        nextStage.style.opacity = "1";
+                        nextStage.style.transform = "translateY(0)";
+                    }, 50);
+                }, 600);
+            }
+
+            const scriptURL =
+                "https://script.google.com/macros/s/AKfycby9ZTkbMZ2nXEKDRT5Rhkm6PefDp-gaMWp62be5gQGCd0f53yTMbhHh2ePv_o166L5h/exec";
+            const form = document.getElementById("leadForm");
+            const submitBtn = document.getElementById("submitBtn");
+            const errorMsg = document.getElementById("error-msg");
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const data = {
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    phone: document.getElementById("phone").value,
+                };
+
+                if (!/^01[0125][0-9]{8}$/.test(data.phone)) {
+                    errorMsg.innerText = "ERROR: INVALID EGYPTIAN NUMBER";
+                    return;
+                }
+
+                errorMsg.innerText = "";
+                submitBtn.innerHTML =
+                    'VERIFYING... <i class="fas fa-spinner fa-spin"></i>';
+                submitBtn.disabled = true;
+
+                try {
+                    await fetch(scriptURL, {
+                        method: "POST",
+                        mode: "no-cors",
+                        body: JSON.stringify(data),
+                    });
+                    transitionTo("stage-thanks");
+                } catch (error) {
+                    errorMsg.innerText = "CONNECTION FAILED. PLEASE TRY AGAIN.";
+                    submitBtn.innerHTML =
+                        'SECURE MY SPOT <i class="fas fa-arrow-right arrow-icon"></i>';
+                    submitBtn.disabled = false;
+                }
+            });
+        </script>
+    </body>
+</html>
